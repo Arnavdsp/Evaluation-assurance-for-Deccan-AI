@@ -23,7 +23,7 @@ About 25% of PASS verdicts are silently wrong in this synthetic setup.
 | Execution checks + random forest | 47.1% ± 1.5 | 59% | 17.4% | 86% |
 | Both feature sets + random forest | 45.9% ± 1.3 | 57% | 17.3% | 86% |
 
-![operating curve](figures/operating_curve.png)
+
 
 What I take from this:
 
