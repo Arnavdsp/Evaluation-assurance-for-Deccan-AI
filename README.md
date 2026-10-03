@@ -70,7 +70,7 @@ Take 200–500 anonymized traces with existing verdicts, whatever checks are act
 
 ```bash
 cd evaluation-assurance
-pip install -r requirements.txt
+pip install -r requirements.txt pytest
 python experiments/run_all.py     # ~2 min, writes results/ and figures/
 python -m pytest -q               # metrics, leakage guard, one-seed smoke run
 ```
