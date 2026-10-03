@@ -53,11 +53,11 @@ agent run -> evaluator -> PASS -> [execution checks] -> score + reasons -> top-k
 
 It runs as a small step after the evaluator: ~15 weights, CPU, batch or streaming, no external API in the path. The same idea could flag RL rollouts where the verifier said PASS but the state checks disagree, which looks a lot like reward hacking.
 
-`src/jev_adapter.py` is an optional hook for TypeSafe's Jev on free-text evidence. It isn't used for any number above.
+`evaluation-assurance/src/jev_adapter.py` is an optional hook for TypeSafe's Jev on free-text evidence. It isn't used for any number above.
 
 ## Real-data pilot
 
-Take 200–500 anonymized traces with existing verdicts, whatever checks are actually logged, and trusted outcomes. Swap them in for `evaluator_mock.py` and the `obs_*` columns, then re-run. If it doesn't beat both random and the rule at the target budget, it shouldn't ship.
+Take 200–500 anonymized traces with existing verdicts, whatever checks are actually logged, and trusted outcomes. Swap them in for `src/evaluator_mock.py` and the `obs_*` columns, then re-run. If it doesn't beat both random and the rule at the target budget, it shouldn't ship.
 
 ## Limitations
 
@@ -69,14 +69,20 @@ Take 200–500 anonymized traces with existing verdicts, whatever checks are act
 ## Run
 
 ```bash
+cd evaluation-assurance
 pip install -r requirements.txt
 python experiments/run_all.py     # ~2 min, writes results/ and figures/
+python -m pytest -q               # metrics, leakage guard, one-seed smoke run
 ```
 
-The notebook (`notebooks/evaluation_assurance_demo.ipynb`) is self-contained and runs on Colab.
+`run_all.py` is seeded: re-running it reproduces the CSVs in `results/` exactly.
+
+The notebook (`evaluation-assurance/notebooks/evaluation_assurance_demo.ipynb`) is self-contained and runs on Colab.
 
 ```
+evaluation-assurance/
 src/          data_generation, evaluator_mock, audit_models, metrics, pipeline, jev_adapter (optional)
 experiments/  headline, realistic_prevalence, per_mode, calibration_negative_control,
               robustness_shift, canary_size, make_figures, run_all
+tests/        pytest suite (runs in CI)
 ```

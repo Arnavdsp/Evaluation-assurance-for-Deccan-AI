@@ -70,7 +70,10 @@ Take 200–500 anonymized traces with existing verdicts, whatever checks are act
 ```bash
 pip install -r requirements.txt
 python experiments/run_all.py     # ~2 min, writes results/ and figures/
+python -m pytest -q               # metrics, leakage guard, one-seed smoke run
 ```
+
+`run_all.py` is seeded: re-running it reproduces the CSVs in `results/` exactly.
 
 The notebook (`notebooks/evaluation_assurance_demo.ipynb`) is self-contained and runs on Colab.
 
@@ -78,4 +81,5 @@ The notebook (`notebooks/evaluation_assurance_demo.ipynb`) is self-contained and
 src/          data_generation, evaluator_mock, audit_models, metrics, pipeline, jev_adapter (optional)
 experiments/  headline, realistic_prevalence, per_mode, calibration_negative_control,
               robustness_shift, canary_size, make_figures, run_all
+tests/        pytest suite (runs in CI)
 ```
